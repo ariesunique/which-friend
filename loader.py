@@ -1,7 +1,12 @@
 import re
 import random
+from rich import print
+from rich.console import Console
+from rich.panel import Panel
+from rich.prompt import Prompt
 
 
+console = Console(width=50)
 chars = ["Monica", "Phoebe", "Rachel", "Ross", "Joey", "Chandler"]
 
 
@@ -72,12 +77,12 @@ Type quit at any time to quit playing.
         else:
             print("Please enter a valid number")
     episode_map = episode_maps[choice]
-    print(f"{episode_map['title']}")
+    console.rule(f"[bold red]{episode_map['title']}")
     while True:
         char = random.choice(chars)
         lines = episode_map[char]
         print(random.choice(lines))
-        resp = input("Who said it? --> ")
+        resp = Prompt.ask("[i]Who said it?[/i] :smiley: --> ", choices=chars)
         if resp == char:
             print("You got it!!")
         else:
@@ -88,7 +93,7 @@ Type quit at any time to quit playing.
 
 def run():
     episode_maps = setup()
-    print("Welcome to 'Name That Friend'")
+    print(Panel.fit("Welcome to [bold red]Name That Friend[/bold red]"))
     menu(episode_maps)
     print("Thanks for playing!")
 
